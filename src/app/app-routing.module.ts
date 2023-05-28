@@ -1,7 +1,37 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { BaseLayoutComponent } from './layouts/base-layout/base-layout.component';
+import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { AboutPageComponent } from './pages/about-page/about-page.component';
+import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
 
-const routes: Routes = [];
+import { AdminProductComponent } from './pages/admin/admin-product/admin-product.component';
+import { HomeComponent } from './home/home/home.component';
+import { ProductListComponent } from './component/product-list/product-list.component';
+import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
+import { ProductAddComponent } from './pages/product-add/product-add.component';
+import { ProductEditComponent } from './pages/product-edit/product-edit.component';
+import { PageNotfoundComponent } from './pages/page-notfound/page-notfound.component';
+
+const routes: Routes = [
+  {
+    path: '', component: BaseLayoutComponent, children: [
+      { path: "", component: HomeComponent },
+      { path: "about", component: AboutPageComponent },
+      { path: "product/:id", component: ProductDetailComponent }
+    ]
+  },
+  {
+    path: 'admin', component: AdminLayoutComponent, children: [
+      { path: "", redirectTo: "dashboard", pathMatch: "full" },
+      { path: "dashboard", component: DashboardComponent },
+      { path: "product", component: ProductListComponent },
+      { path: "product/add", component: ProductAddComponent },
+      { path: "product/:id/edit", component: ProductEditComponent }
+    ]
+  },
+  { path: "**", component: PageNotfoundComponent }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
